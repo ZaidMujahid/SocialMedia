@@ -1,0 +1,41 @@
+const User = require("../models/userModel")
+const bcrypt = require("bcrypt")
+
+const register = async (req,res)=> {
+    
+    try {
+        //encrpting password using bcrypt
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(req.body?.password, salt)
+        //creating user
+        const newUser = new User({
+            username: req.body?.username,
+            email: req.body?.email,
+            password: hashedPassword,
+        })
+        //saving response
+        const user = await newUser.save();
+        res.status(200).json(user)
+    } catch (err) {
+        res.json({error:err.message})
+    }
+
+}
+const login = async (req, res)=> {
+
+    try {
+        //email verification
+        const user = await User.findOne({email: req.body.email})
+        !user && res.status(404).json("user not found")
+        //password verification
+        const validPassword = await bcrypt.compare(req.body.password, user.password)
+        !validPassword && res.status(400).json("Wrong password")
+    } catch (error) {
+        res.json({error:error.message});
+    }
+}
+
+module.exports = {
+    register,
+    login
+}
