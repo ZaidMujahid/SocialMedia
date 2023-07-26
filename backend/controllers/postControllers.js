@@ -50,6 +50,16 @@ const likePost = async (req, res)=> {
         res.status(500).json(error.message)
     }
 }
+const postComment = async (req, res)=> {
+    try{
+        const comment = await Post.findById(req.params.id)
+        await comment.updateOne({$push: {comments: req.body.comment}})
+        res.status(200).json("Comment Added")
+    }
+    catch (error){
+        res.status(500).json(error.message)
+    }
+}
 const getPost = async (req, res)=> {
     try {
         const post = await Post.findById(req.params.id)
@@ -60,14 +70,14 @@ const getPost = async (req, res)=> {
 }
 const getTimelinePost = async (req, res)=> {
     try {
-        const currentUser = await User.findById(req.body.userId)
+        const currentUser = await User.findById(req.params.userId)
         const userPosts = await Post.find({userId: currentUser._id})
         const friendsPosts = await Promise.all(
             currentUser.followings.map((friendId)=> {
                 return Post.find({userId: friendId})
             })
         )
-        res.json(userPosts.concat(...friendsPosts))
+        res.status(200).json(userPosts.concat(...friendsPosts))
     } catch (error) {
         res.status(500).json(error.message)
     }
@@ -78,6 +88,7 @@ module.exports = {
     updatePost,
     deletePost,
     likePost,
+    postComment,
     getPost,
     getTimelinePost
 }

@@ -54,7 +54,7 @@ const followUser = async (req, res)=> {
             const currentUser = await User.findById(req.body.userId)
             if(!user.followers.includes(req.body.userId)){
                 await user.updateOne({$push: {followers: req.body.userId}})
-                await currentUser.updateOne({$push: {followings: req.param.id}})
+                await currentUser.updateOne({$push: {followings: req.params.id}})
                 res.status(200).json("user has been followed")
             }else{
                 res.status(403).json("you already follow this user")
@@ -74,7 +74,7 @@ const unFollowUser = async (req, res)=> {
             const currentUser = await User.findById(req.body.userId)
             if(user.followers.includes(req.body.userId)){
                 await user.updateOne({$pull: {followers: req.body.userId}})
-                await currentUser.updateOne({$pull: {followings: req.param.id}})
+                await currentUser.updateOne({$pull: {followings: req.params.id}})
                 res.status(200).json("user has been unfollowed")
             }else{
                 res.status(403).json("you don't follow this user")

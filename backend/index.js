@@ -8,6 +8,7 @@ const postRoute = require("./routes/postRoute")
 dotenv.config()
 
 //middleware
+app.use(express.json())
 app.use("/users", userRoute)
 app.use("/auth", authRoute)
 app.use("/posts", postRoute)

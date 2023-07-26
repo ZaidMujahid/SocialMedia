@@ -1,7 +1,41 @@
-body {
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
   margin: 0;
   padding: 0;
   font-family: 'Quicksand', sans-serif;
   box-sizing: border-box;
   font-size: 62.5%;
+  background-color: #F9FBE7;
+}
+.leftbar{
+  height: calc(100vh - 58px);
+  overflow-y: scroll;
+  position: sticky;
+  top: 0px;
+}
+::-webkit-scrollbar {
+  width: 3px;
+}
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #D8C4B6;
+}
+
+.profilePic{
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -65%);
+}
+.profileName{
+  position: absolute;
+  left:50%;
+  transform: translate(-50%, 250%);
+}
+.height{
+  height: calc(100vh - 58px);
 }
