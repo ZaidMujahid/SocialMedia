@@ -1,36 +1,40 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Leftbar from './Leftbar.jsx'
 import Feed from './Feed.jsx'
 import ProfileRightBar from './ProfileRightBar.jsx'
-import mountain from '../assets/1.jpg'
-import profile from "../assets/1p.jpg"
-import '../style.css'
-import CreatePost from './CreatePost.jsx'
-import Posts from './Posts.jsx'
+import user from "../assets/user.png"
+import cover from "../assets/cover.jpg"
+import '../index.css'
+import axios from 'axios'
+import { useParams } from "react-router"
+
 
 
 const Profile = () => {
+    const [fetchedUser, setFetchedUser] = useState({})
+    const username = useParams().username;
+
+    useEffect(() => {
+        const fetchUser = async ()=> {
+            const res = await axios.get(`/users?username=${username}`);
+            setFetchedUser(res.data)
+        }
+        fetchUser();
+    },[])
     return (
         <div>
             <div className='flex justify-center'>
                 <div><Leftbar /></div>
                 <section>
                     <div className='relative h-[400px] bg-white rounded-xl m-2 mt-5'>
-                        <img src={mountain} alt="mountain  " className='h-[300px] w-[800px] rounded-3xl p-2' />
-                        <img src={profile} alt="profile" className='rounded-full h-[125px] w-[125px] profilePic border-4 border-white' />
-                        <p className='profileName text-base font-semibold'>Zaid Mujahid</p>
+                        <img src={fetchedUser.coverPicture || cover} alt="mountain  " className='h-[300px] w-[800px] p-2' />
+                        <img src={fetchedUser.profilePicture || user} alt="profile" className='rounded-full h-[125px] w-[125px] profilePic border-4 border-white' />
+                        <p className='profileName text-base font-semibold capitalize'>{fetchedUser.username}</p>
                     </div>
 
                     <div className='flex justify-center'>
-                        <div className='flex flex-col'>
-                            {/* I could have directly rendered Feed comp over here but I have to pass props thats why I did this */}
-                            <CreatePost />
-                            <Posts type="profilePage" />
-                            <Posts type="profilePage" />
-                            <Posts type="profilePage" />
-                            <Posts type="profilePage" />
-                        </div>
-                        <ProfileRightBar />
+                        <Feed type="profilePage" username={username}/>
+                        <ProfileRightBar user={fetchedUser}/>
                     </div>
                 </section>
             </div>

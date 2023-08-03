@@ -5,7 +5,7 @@ const {updateUser,deleteUser, getUser, followUser, unFollowUser} = require("../c
 router.put("/:id", updateUser)
 
 //get
-router.get("/:id", getUser)
+router.get("/", getUser)
 
 // //delete
 router.delete("/:id", deleteUser)

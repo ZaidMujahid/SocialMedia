@@ -39,13 +39,17 @@ const deleteUser = async (req, res)=>{
 }
 
 const getUser = async (req, res)=> {
-        try {
-            const user = await User.findById(req.params.id)
-            const {password, updatedAt, ...other} = user._doc
-            res.status(200).json(other)
-        } catch (error) {
-            return res.status(500).json(error.message)
-        }
+    const userId = req.query.userId
+    const username = req.query.username
+    try {
+        const user = userId 
+        ? await User.findById(userId)
+        : await User.findOne({ username: username })
+        const {password, updatedAt, ...other} = user._doc
+        res.status(200).json(other)
+    } catch (error) {
+        return res.status(500).json(error.message)
+    }
 }
 const followUser = async (req, res)=> {
     if(req.body.userId !== req.params.id){

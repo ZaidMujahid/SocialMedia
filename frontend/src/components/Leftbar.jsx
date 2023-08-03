@@ -3,7 +3,7 @@ import { AiOutlineHeart } from "react-icons/ai"
 import { MdOutlineAccountCircle } from "react-icons/md"
 import { BiCommentDetail } from "react-icons/bi"
 import dummyImg from "../assets/1.jpg"
-import "../style.css"
+import "../index.css"
 
 const Leftbar = () => {
   return (

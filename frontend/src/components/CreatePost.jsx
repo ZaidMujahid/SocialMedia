@@ -1,17 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import profile from "../assets/1p.jpg"
 import { BiImage } from "react-icons/bi"
 import { CgAttachment } from "react-icons/cg"
 import { AiOutlineAudio } from "react-icons/ai"
 import { BsClipboardData } from "react-icons/bs"
+import user from "../assets/user.png"
+import axios from "axios"
 
 const CreatePost = () => {
+    // const [fetchedUser, setFetchedUser] = useState({})
+    // useEffect(() => {
+    //     const fetchUser = async ()=> {
+    //         const res = await axios.get(`/users?userId=${post.userId}`);
+    //         setFetchedUser(res.data)
+    //     }
+    //     fetchUser();
+    // },[post.userId])
+
     return (
         <div>
             <div className='bg-white p-4 rounded-xl m-2 mt-5'>
                 {/* search and profile */}
                 <div className='flex gap-2'>
-                    <img src={profile} alt="img" className='w-[2.8rem] h-[2.5rem] rounded-[50%] m-[.5em]' />
+                    <img src={user} alt="img" className='w-[2.8rem] h-[2.5rem] rounded-[50%] m-[.5em]' />
                     <input type="text" placeholder="What's on your mind..." className='text-base sm:px-[.8em] rounded-3xl outline-none w-full' />
                 </div>
                 {/* border */}
