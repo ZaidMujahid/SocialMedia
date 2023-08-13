@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import axios from "axios"
 import { AiOutlineHeart } from "react-icons/ai"
 import { AiFillHeart } from "react-icons/ai"
@@ -7,6 +7,7 @@ import { BiCommentDetail } from "react-icons/bi"
 import user from "../assets/user.png"
 import { format } from 'timeago.js';
 import { Link } from 'react-router-dom'
+import { AuthContext } from '../context/AuthContext'
 
 const Posts = ({ type, post }) => {
     // Handling props in tailwind CSS
@@ -20,7 +21,8 @@ const Posts = ({ type, post }) => {
     const [isCommentBtnClicked, setIsCommentBtnClicked] = useState(false)
     const [fetchedUser, setFetchedUser] = useState({})
     // const [postComment, setPostComment] = useState('')
-
+    const {user:currentUser} = useContext(AuthContext)
+    
     const likeHandler = () => {
         setLike(isliked ? like - 1 : like + 1)
         setisLiked(!isliked)
